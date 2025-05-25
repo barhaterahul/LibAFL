@@ -1,16 +1,13 @@
 [package]
-name = "frida_fuzzer"
-version = "0.15.3"
-authors = [
-  "Andrea Fioraldi <andreafioraldi@gmail.com>",
-  "Dominik Maier <domenukk@gmail.com>",
-]
+name = "fuzz_decodeJpg"
+version = "0.0.1"
 edition = "2024"
-
+authors = [
+  "Rahul Barhate <Barhate.Rahul@gmail.com>",
+]
 [features]
 default = ["std"]
 std = []
-
 
 [profile.release]
 lto = true
@@ -28,10 +25,11 @@ libafl = { path = "../../../libafl", features = [
   "errors_backtrace",
 ] } #,  "llmp_small_maps", "llmp_debug"]}
 libafl_bolts = { path = "../../../libafl_bolts" }
-frida-gum = {path = "/Users/bo25or/Documents/work/mobile/INGAppFuzz/frida-rust/frida-gum",features = [
+frida-gum = { version = "0.16.7", features = [
   "auto-download",
   "event-sink",
   "invocation-listener",
+  "script",
 ] }
 libafl_frida = { path = "../../../libafl_frida", features = ["cmplog"] }
 libafl_targets = { path = "../../../libafl_targets", features = [
@@ -44,3 +42,4 @@ mimalloc = { version = "0.1.43", default-features = true, features = [
 ] }
 color-backtrace = { version = "0.6.1", features = ["resolve-modules"] }
 env_logger = "0.11.5"
+

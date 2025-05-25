@@ -143,7 +143,7 @@ impl Lock {
     }
 }
 
-#[cfg(any(target_os = "linux", target_vendor = "apple"))]
+#[cfg(any(target_os = "linux",target_os = "android",target_vendor = "apple"))]
 use errno::{Errno, errno, set_errno};
 #[cfg(target_os = "windows")]
 use winapi::shared::minwindef::DWORD;
@@ -154,7 +154,7 @@ use winapi::um::errhandlingapi::{GetLastError, SetLastError};
 struct LastErrorGuard {
     #[cfg(target_os = "windows")]
     last_error: DWORD,
-    #[cfg(any(target_os = "linux", target_vendor = "apple"))]
+    #[cfg(any(target_os = "linux", target_os = "android",target_vendor = "apple"))]
     last_error: Errno,
 }
 
@@ -163,9 +163,9 @@ impl LastErrorGuard {
     fn new() -> Self {
         #[cfg(target_os = "windows")]
         let last_error = unsafe { GetLastError() };
-        #[cfg(any(target_os = "linux", target_vendor = "apple"))]
+        #[cfg(any(target_os = "linux", target_os = "android",target_vendor = "apple"))]
         let last_error = errno();
-
+        
         LastErrorGuard { last_error }
     }
 }
@@ -177,7 +177,7 @@ impl Drop for LastErrorGuard {
         unsafe {
             SetLastError(self.last_error);
         }
-        #[cfg(any(target_os = "linux", target_vendor = "apple"))]
+        #[cfg(any(target_os = "linux",target_os = "android", target_vendor = "apple"))]
         set_errno(self.last_error);
     }
 }
@@ -598,6 +598,7 @@ impl AsanRuntime {
     /// # Safety
     /// Registers a hook for an existing location, the hook can read and write mem freely, so..
     #[expect(clippy::too_many_lines)]
+    #[allow(unused_variables)]
     pub unsafe fn register_hooks(&mut self, gum: &Gum) {
         let mut interceptor = Interceptor::obtain(gum);
         let process = Process::obtain(gum);
