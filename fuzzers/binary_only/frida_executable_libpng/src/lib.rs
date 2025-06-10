@@ -1,7 +1,7 @@
 #![allow(clippy::missing_safety_doc)]
 use std::mem::transmute;
 
-use libc::{c_void, dlsym, RTLD_NEXT};
+use libc::{c_void, dlsym, RTLD_DEFAULT};
 
 mod fuzzer;
 
@@ -47,7 +47,7 @@ pub unsafe extern "C" fn __libc_start_main(
         ORIG_MAIN = main;
 
         let orig_libc_start_main_addr: *mut c_void =
-            dlsym(RTLD_NEXT, c"__libc_start_main".as_ptr());
+            dlsym(RTLD_DEFAULT, c"__libc_start_main".as_ptr());
 
         let orig_libc_start_main: LibcStartMainFunc = transmute(orig_libc_start_main_addr);
 

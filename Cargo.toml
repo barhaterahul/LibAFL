@@ -27,7 +27,7 @@ members = [
   "utils/libafl_benches",
   "utils/libafl_jumper",
   "utils/ci_runner",
-  "utils/ci_splitter", "fuzzers/binary_only/fuzz_decodeJpg",
+  "utils/ci_splitter",
 ]
 
 default-members = [

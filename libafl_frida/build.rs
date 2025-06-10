@@ -19,9 +19,16 @@ fn main() {
         println!("cargo:rustc-link-lib=dylib=c++");
     }
 
+    if target_os == "android" {
+        println!("cargo:rustc-link-lib=c++");
+        let compiler_rt_path = "/Users/bo25or/Library/Android/sdk/ndk/29.0.13113456/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/20/lib/linux/";
+        println!("cargo:rustc-link-search=native={}", compiler_rt_path);
+        println!("cargo:rustc-link-lib=static=clang_rt.builtins-aarch64-android");
+    }
+    /* Commenting this for  target android, because this somehow always executes even for android target
     #[cfg(target_vendor = "apple")]
-    println!("cargo:rustc-link-lib=dylib=c++");
-
+    println!("cargo:rustc-link-lib=dylib=resolv");
+     */
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=test_harness.cpp");
     println!("cargo:rerun-if-changed=src/gettls.c");

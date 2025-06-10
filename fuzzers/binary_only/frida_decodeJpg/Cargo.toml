@@ -2,9 +2,7 @@
 name = "fuzz_decodeJpg"
 version = "0.0.1"
 edition = "2024"
-authors = [
-  "Rahul Barhate <Barhate.Rahul@gmail.com>",
-]
+authors = ["Rahul Barhate <Barhate.Rahul@gmail.com>"]
 [features]
 default = ["std"]
 std = []
@@ -42,4 +40,3 @@ mimalloc = { version = "0.1.43", default-features = true, features = [
 ] }
 color-backtrace = { version = "0.6.1", features = ["resolve-modules"] }
 env_logger = "0.11.5"
-
